@@ -79,7 +79,6 @@
     self.placeholderTextField.textColor = [UIColor lightGrayColor];
     self.placeholderTextField.textAlignment = self.textAlignment;
     self.placeholderTextField.userInteractionEnabled = NO;
-    self.placeholderTextField.borderStyle = self.borderStyle;
     [self addSubview:self.placeholderTextField];
 }
 
@@ -103,6 +102,14 @@
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [super setBackgroundColor:backgroundColor];
     self.placeholderTextField.backgroundColor = backgroundColor;
+}
+
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
+    self.placeholderTextField.borderStyle = borderStyle;
+}
+
+- (UITextBorderStyle)borderStyle {
+    return self.placeholderTextField.borderStyle;
 }
 
 - (void)setTableBorderColor:(UIColor *)tableBorderColor
