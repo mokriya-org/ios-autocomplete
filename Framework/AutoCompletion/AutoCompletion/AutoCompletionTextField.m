@@ -75,7 +75,7 @@
     self.placeholderTextField.font = self.font;
     self.placeholderTextField.adjustsFontSizeToFitWidth = YES;
     self.placeholderTextField.clipsToBounds = YES;
-    self.placeholderTextField.backgroundColor = self.backgroundColor;
+    self.placeholderTextField.backgroundColor = [UIColor clearColor];
     self.placeholderTextField.textColor = [UIColor lightGrayColor];
     self.placeholderTextField.textAlignment = self.textAlignment;
     self.placeholderTextField.userInteractionEnabled = NO;
@@ -99,10 +99,6 @@
 }
 
 #pragma mark - Setters
-
-- (UITextBorderStyle)borderStyle {
-    return self.placeholderTextField.borderStyle;
-}
 
 - (void)setTableBorderColor:(UIColor *)tableBorderColor
 {
