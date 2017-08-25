@@ -75,13 +75,12 @@
     self.placeholderTextField.font = self.font;
     self.placeholderTextField.adjustsFontSizeToFitWidth = YES;
     self.placeholderTextField.clipsToBounds = YES;
-    self.placeholderTextField.backgroundColor = [UIColor clearColor];
+    self.placeholderTextField.backgroundColor = self.backgroundColor;
     self.placeholderTextField.textColor = [UIColor lightGrayColor];
     self.placeholderTextField.textAlignment = self.textAlignment;
     self.placeholderTextField.userInteractionEnabled = NO;
     self.placeholderTextField.borderStyle = self.borderStyle;
     [self addSubview:self.placeholderTextField];
-    self.backgroundColor = [UIColor clearColor];
 }
 
 - (NSString *)extractSubstringFromString:(NSString *)originalString
@@ -100,6 +99,11 @@
 }
 
 #pragma mark - Setters
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    self.placeholderTextField.backgroundColor = backgroundColor;
+}
 
 - (void)setTableBorderColor:(UIColor *)tableBorderColor
 {
