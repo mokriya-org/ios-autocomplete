@@ -72,8 +72,9 @@
 
 - (void)addSuggestionPlaceholderTextField {
     self.placeholderTextField = [[UITextField alloc]initWithFrame:self.bounds];
+    self.placeholderTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.placeholderTextField.font = self.font;
-    self.placeholderTextField.adjustsFontSizeToFitWidth = YES;
+    self.placeholderTextField.adjustsFontSizeToFitWidth = self.adjustsFontSizeToFitWidth;
     self.placeholderTextField.clipsToBounds = YES;
     self.placeholderTextField.backgroundColor = [UIColor clearColor];
     self.placeholderTextField.textColor = [UIColor lightGrayColor];
@@ -99,6 +100,26 @@
 }
 
 #pragma mark - Setters
+
+- (void)setAdjustsFontSizeToFitWidth:(BOOL)adjustsFontSizeToFitWidth {
+    [super setAdjustsFontSizeToFitWidth:adjustsFontSizeToFitWidth];
+    self.placeholderTextField.adjustsFontSizeToFitWidth = adjustsFontSizeToFitWidth;
+}
+
+- (void)setMinimumFontSize:(CGFloat)minimumFontSize {
+    [super setMinimumFontSize:minimumFontSize];
+    self.placeholderTextField.minimumFontSize = minimumFontSize;
+}
+
+- (void)setFont:(UIFont *)font {
+    [super setFont:font];
+    self.placeholderTextField.font = font;
+}
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+    [super setTextAlignment:textAlignment];
+    self.placeholderTextField.textAlignment = textAlignment;
+}
 
 - (void)setTableBorderColor:(UIColor *)tableBorderColor
 {
