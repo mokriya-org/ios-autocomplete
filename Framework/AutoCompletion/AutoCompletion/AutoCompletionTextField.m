@@ -11,6 +11,30 @@
 #define kDefaultDamping 0.2
 #define kDefaultFrequency 3
 
+@interface AutoCompletionPlaceholderTextField : UITextField
+@property (nonatomic, unsafe_unretained) UITextField *textField;
+@end
+
+@implementation AutoCompletionPlaceholderTextField
+
+- (instancetype)initWithTextField:(UITextField *)textField {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        _textField = textField;
+    }
+    return self;
+}
+
+- (CGRect)textRectForBounds:(CGRect)bounds {
+    return [self.textField textRectForBounds:bounds];
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds {
+    return [self.textField editingRectForBounds:bounds];
+}
+
+@end
+
 @interface AutoCompletionTextField ()<UITableViewDelegate> {
 }
 
@@ -71,7 +95,8 @@
 }
 
 - (void)addSuggestionPlaceholderTextField {
-    self.placeholderTextField = [[UITextField alloc]initWithFrame:self.bounds];
+    self.placeholderTextField = [[AutoCompletionPlaceholderTextField alloc]  initWithTextField:self];
+    self.placeholderTextField.frame = self.bounds;
     self.placeholderTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.placeholderTextField.font = self.font;
     self.placeholderTextField.adjustsFontSizeToFitWidth = self.adjustsFontSizeToFitWidth;
