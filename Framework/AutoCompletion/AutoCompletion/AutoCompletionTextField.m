@@ -33,6 +33,10 @@
     return [self.textField editingRectForBounds:bounds];
 }
 
+- (CGRect)borderRectForBounds:(CGRect)bounds {
+    return [self.textField borderRectForBounds:bounds];
+}
+
 @end
 
 @interface AutoCompletionTextField ()<UITableViewDelegate> {
@@ -99,7 +103,7 @@
     self.placeholderTextField.frame = self.bounds;
     self.placeholderTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.placeholderTextField.font = self.font;
-    self.placeholderTextField.adjustsFontSizeToFitWidth = self.adjustsFontSizeToFitWidth;
+    self.placeholderTextField.adjustsFontSizeToFitWidth = NO;
     self.placeholderTextField.clipsToBounds = YES;
     self.placeholderTextField.backgroundColor = [UIColor clearColor];
     self.placeholderTextField.textColor = [UIColor lightGrayColor];
@@ -125,16 +129,6 @@
 }
 
 #pragma mark - Setters
-
-- (void)setAdjustsFontSizeToFitWidth:(BOOL)adjustsFontSizeToFitWidth {
-    [super setAdjustsFontSizeToFitWidth:adjustsFontSizeToFitWidth];
-    self.placeholderTextField.adjustsFontSizeToFitWidth = adjustsFontSizeToFitWidth;
-}
-
-- (void)setMinimumFontSize:(CGFloat)minimumFontSize {
-    [super setMinimumFontSize:minimumFontSize];
-    self.placeholderTextField.minimumFontSize = minimumFontSize;
-}
 
 - (void)setFont:(UIFont *)font {
     [super setFont:font];
@@ -247,7 +241,7 @@
                 NSInteger rows = items.count;
                 [weakSelf showSuggestionsTableViewForNumberOfRows:rows];
                 id item = items[0];
-                if ([item valueForKey:textKey]) {
+                if (textKey && [item valueForKey:textKey]) {
                     [self updateSuggestionPlaceholderTextFieldWithString:[self extractSubstringFromString:[item valueForKey:textKey] startingWithString:self.text] ];
                 } else {
                     [self updateSuggestionPlaceholderTextFieldWithString:@""];
@@ -307,6 +301,7 @@
     {
         
         
+        _autocompleteTableView.frame = [self getAutoCompleteInitialFrame];
         [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             _autocompleteTableView.frame = [self getAutoCompleteTableViewFrameForNumberOfRows:rows];
         } completion:nil];
@@ -395,7 +390,7 @@
         textFrame = self.frame;
     }
     
-    frame.origin.y = textFrame.size.height + textFrame.origin.y + _tableOffset.vertical;
+    frame.origin.y = CGRectGetMaxY(textFrame) + _tableOffset.vertical;
     frame.origin.x = textFrame.origin.x + (self.frame.size.width - textFrame.size.width)/2 + _tableOffset.horizontal;
     
     if (_tableWidth != NSNotFound)
@@ -442,7 +437,7 @@
 
 - (CGRect)textAbsoluteFrame
 {
-    return [self.superview convertRect:self.frame toView:nil];
+    return [[UIApplication sharedApplication].keyWindow convertRect:self.bounds fromView:self];
 }
 
 @end
